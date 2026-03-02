@@ -33,12 +33,18 @@ stake-bj/
 cp .env.example .env
 ```
 
-### 2. 取得 Stake Token
+### ### 2. 取得連線資訊 (重要)
 
-1. 在瀏覽器開啟 `https://stake.com` 並登入
-2. 按 `F12` → **Application** → **Cookies** → `stake.com`
-3. 找到 `session` 或 `access_token` Cookie 值
-4. 填入 `.env` 的 `STAKE_TOKEN`
+為了跳過驗證，機器人需要模擬你的瀏覽器環境，請依照以下步驟取得設定值：
+
+1. 在瀏覽器開啟 `https://stake.com` 並登入。
+2. 按下 `F12` 開啟開發者工具，點選 **Network (網路)** 分頁。
+3. 重新整理頁面 (F5)，在左側清單找到一個名為 `graphql` 的請求。
+4. 點擊該請求，在右側標頭 (Headers) 往下捲動找到 **Request Headers**：
+   - **STAKE_TOKEN**: 尋找 `x-access-token` 標頭的值，或是 `cookie` 裡面的 `session` 值。
+   - **COOKIE**: 直接複製整段 `cookie:` 標頭的內容。
+   - **USER_AGENT**: 直接複製整段 `user-agent:` 標頭的內容。
+5. 將這些值填入 `.env` 檔案對應位置。
 
 ### 3. 調整投注設定（`.env`）
 
