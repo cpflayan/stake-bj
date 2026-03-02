@@ -14,7 +14,10 @@ from rich.console import Console
 from rich.panel import Panel
 
 # 載入環境變數
-load_dotenv()
+try:
+    load_dotenv()
+except Exception as e:
+    print(f"⚠️ [bold yellow]警告：讀取 .env 檔案時發生錯誤 (可能是格式不正確): {e}[/bold yellow]")
 
 console = Console()
 
