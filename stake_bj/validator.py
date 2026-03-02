@@ -49,7 +49,7 @@ class ValidationResult:
 
 SUPPORTED_CURRENCIES = {
     "usd", "btc", "eth", "ltc", "doge", "bch",
-    "xrp", "trx", "eos", "bnb", "usdt"
+    "xrp", "trx", "eos", "bnb", "usdt", "twd"
 }
 
 SUPPORTED_STRATEGIES = {"flat", "martingale", "basic"}
