@@ -1,0 +1,30 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# 環境變數（含 Token，絕對不能上傳！）
+.env
+
+# 日誌檔案
+logs/
+*.log
+
+# 測試快取
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
+
+# Debug 腳本（非核心功能）
+debug_*.py
+check_*.py
+fix_*.py
+test_*.py
