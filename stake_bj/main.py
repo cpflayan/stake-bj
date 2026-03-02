@@ -13,12 +13,23 @@ from dotenv import load_dotenv
 from rich.console import Console
 from rich.panel import Panel
 
-# 載入環境變數
-try:
-    load_dotenv()
-except Exception as e:
-    print(f"⚠️ [bold yellow]警告：讀取 .env 檔案時發生錯誤 (可能是格式不正確): {e}[/bold yellow]")
 
+# 載入環境變數
+
+local_env = Path.cwd() / ".env.bj"
+home_env = Path.home() / ".env.bj"
+
+env_path = local_env if local_env.exists() else home_env
+
+try:
+    load_dotenv(dotenv_path=env_path, override=True)
+    if env_path.exists():
+        # 這裡可以用 logging 代替 print
+        pass 
+    else:
+        print(f"ℹ️  提示：未在 {env_path} 找到 .env 檔案，將使用系統環境變數。")
+except Exception as e:
+    print(f"⚠️ [bold yellow]警告：讀取 .env 檔案時發生錯誤: {e}[/bold yellow]")
 console = Console()
 
 
