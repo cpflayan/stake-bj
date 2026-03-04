@@ -240,20 +240,15 @@ class BasicStrategy:
 
         action = action_map.get(action_code, GameAction.HIT)
 
-        # 處理加倍/分牌限制
+        # 處理加倍限制：只有2張牌時才能加倍，否則改為叫牌
         if action == GameAction.DOUBLE and not state.can_double:
+            logger.debug(f"{hand_type} 策略加倍，但已超過2張牌，改為叫牌")
             return GameAction.HIT
-        if action == GameAction.SPLIT and not state.can_split:
-            # 如果不能分牌，應根據硬牌點數判斷。這裡簡化改為 HIT/STAND
-            return GameAction.HIT if state.player_total < 17 else GameAction.STAND
 
-        # 如果動作不在可用列表中，預設停牌或叫牌
-        if action.value not in state.actions and "stand" in state.actions:
-            if action == GameAction.HIT and "hit" not in state.actions:
-                return GameAction.STAND
-            # 如果策略叫我們做某些事但不行，回歸 Stand
-            if action != GameAction.STAND:
-                return GameAction.STAND
+        # 處理分牌限制：只有對子才能分牌
+        if action == GameAction.SPLIT and not state.can_split:
+            logger.debug(f"{hand_type} 策略分牌，但非對子，改為停叫/叫牌")
+            return GameAction.HIT if state.player_total < 17 else GameAction.STAND
 
         return action
 

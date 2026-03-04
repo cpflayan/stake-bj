@@ -188,11 +188,17 @@ class BlackjackState:
 
     @property
     def can_split(self) -> bool:
-        return GameAction.SPLIT in self.actions or "split" in self.actions
+        """是否可以分牌 (Stake actions 歷史不包含此欄位，改用手牌判斷)"""
+        # Stake 的 actions 是歷史紀錄，split 方案不在歷史中出現
+        # 故改用手牌是否為對子且只有2張來判斷（策略層再確認）
+        return len(self.player_cards) == 2 and is_pair(self.player_cards)
 
     @property
     def can_double(self) -> bool:
-        return GameAction.DOUBLE in self.actions or "double" in self.actions
+        """是否可以加倍 (Stake 僅允許初始2張牌時加倍)"""
+        # Stake 的 actions 是歷史紀錄而非可用動作清單
+        # 加倍只在初始2張牌時可用
+        return len(self.player_cards) == 2
 
     @property
     def can_insurance(self) -> bool:
